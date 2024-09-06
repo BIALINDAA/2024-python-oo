@@ -1,10 +1,11 @@
-class Aluno:
-    nome = ''
-    disciplina = ''
-    turno = ''
-    matricola = False
+class Cliente:
+    def __init__(self, nome, servico, horario, pagamento):
+        self.nome = nome
+        self.servico = servico
+        self.horario = horario
+        self.pagamento = pagamento
 
-aluno_Maria = Aluno()
-aluno_Fernanda= Aluno()
+cliente_Maria = Cliente(nome="Maria", servico="Corte de cabelo", horario="10:00", pagamento="Dinheiro")
+cliente_Fernanda = Cliente(nome="Fernanda", servico="Manicure", horario="14:00", pagamento="Cartão")
 
-alunos = (aluno_Maria, aluno_Fernanda)
+clientes = [cliente_Maria, cliente_Fernanda]
