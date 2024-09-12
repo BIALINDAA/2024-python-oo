@@ -5,7 +5,14 @@ class Cliente:
         self.horario = horario
         self.pagamento = pagamento
 
-cliente_Maria = Cliente(nome="Maria", servico="Corte de cabelo", horario="10:00", pagamento="Dinheiro")
-cliente_Fernanda = Cliente(nome="Fernanda", servico="Manicure", horario="14:00", pagamento="Cartão")
+    def __str_(self):
+        return f'{self.nome} | {self.servico} | {self.horario} | {self.pagamento}'
+    
+cliente_Maria = Cliente('Maria', 'Corte de cabelo', '10:00', 'Dinheiro')
+cliente_Fernanda = Cliente('Fernanda', 'Manicure', '14:00', 'Cartão')
+cliente_Ana = Cliente('Ana', 'Corte de cabelo', '11:00', 'Dinheiro')
 
-clientes = [cliente_Maria, cliente_Fernanda]
+clientes = [cliente_Maria, cliente_Fernanda, cliente_Ana]
+
+print(cliente_Maria)
+print(cliente_Fernanda)
