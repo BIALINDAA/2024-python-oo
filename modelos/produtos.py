@@ -1,31 +1,53 @@
-class Cliente:
-    clientes = []
+from modelos.produtos import Produtos
 
-    def __init__(self, nome, serviço, horário, pagamento):
-        self.nome = nome
-        self.serviço = serviço
-        self.horário = horário
-        self._pagamento = False
-        Cliente.clientes.append(self)
+class Produtos:
+    produtos = []
 
-    def __str_(self):
-        return f'{self.nome} | {self.serviço} | {self.horário} | {self.pagamento}'
+    def __init__(self, nome, descricao, preco, local):
+        self._nome = nome.upper()
+        self._descricao = descricao.title()
+        self._preco = preco
+        self._local = local.title()
+        self._estoque = False
+        self._valor = []
+        Produtos.produtos.append(self)
 
-    def listar_cliente():
+    def __str__(self):
+        return f'{self._nome} | {self._descricao} | {self._preco} | {self._local} | {self.estoque}'
+
+    @classmethod
+    def listar_produtos(cls):
         print('''
-█▀▀ █░░ █ █▀▀ █▄░█ ▀█▀ █▀▀ █▀   █▀▄ ▄▀█   █░░ █▀█ ░░█ ▄▀█   █▀▄ ▄▀█   █▄▄ █ ▄▀█
-█▄▄ █▄▄ █ ██▄ █░▀█ ░█░ ██▄ ▄█   █▄▀ █▀█   █▄▄ █▄█ █▄█ █▀█   █▄▀ █▀█   █▄█ █ █▀█''')
+██████╗░██████╗░░█████╗░██████╗░██╗░░░██╗████████╗░█████╗░░██████╗
+██╔══██╗██╔══██╗██╔══██╗██╔══██╗██║░░░██║╚══██╔══╝██╔══██╗██╔════╝
+██████╔╝██████╔╝██║░░██║██║░░██║██║░░░██║░░░██║░░░██║░░██║╚█████╗░
+██╔═══╝░██╔══██╗██║░░██║██║░░██║██║░░░██║░░░██║░░░██║░░██║░╚═══██╗
+██║░░░░░██║░░██║╚█████╔╝██████╔╝╚██████╔╝░░░██║░░░╚█████╔╝██████╔╝
+╚═╝░░░░░╚═╝░░╚═╝░╚════╝░╚═════╝░░╚═════╝░░░░╚═╝░░░░╚════╝░╚═════╝░
+''')
         
-        print(f'{'Nome do Cliente'.ljust(25)} | {'serviço'.ljust(25)} | {'horário'.ljust(25)} | {'pagamento'.ljust(25)}')
-        for cliente in Cliente.clientes:
-            print(f'{cliente.nome} | {cliente.servio} | {cliente.horário} | {cliente.pagamento}')
-            
-    @property
-    def exrtinta(self):
-        return '❌ não pago' if self._pagamento else '✔️ pago'
-    
-cliente_Maria = Cliente('Maria', 'Corte de cabelo', '10:00', 'Dinheiro')
-cliente_Fernanda = Cliente('Fernanda', 'Manicure', '14:00', 'Cartão')
-cliente_Ana = Cliente('Ana', 'Corte de cabelo', '11:00', 'Dinheiro')
+        print(f'{"Nome do Produto".ljust(20)} | {"Descrição".ljust(30)} | {"Preço".ljust(10)} | {"Local".ljust(20)} | {"Estoque".ljust(10)} | {"Média de Preço"}')
+        print('------------------------------------------------------------------------------------------------------------------------------')
+        for produto in cls.produtos:
+            print(f'{produto._nome.ljust(20)} | {produto._descricao.ljust(30)} | {produto._preco.ljust(10)} | {produto._local.ljust(20)} | {produto.estoque.ljust(10)} | {produto.media_preco}')
+            print('------------------------------------------------------------------------------------------------------------------------------')
 
-Cliente.listar_cliente()
+    @property
+    def estoque(self):
+        return '❌ Sem estoque' if self._estoque else '✔️ Em estoque'
+
+    def alterar_estado(self):
+        self._estoque = not self._estoque        
+
+    def receber_preco(self, fornecedor, preco):
+        preco = Produtos(fornecedor, preco)
+        self._valor.append(preco)
+
+    @property
+    def media_preco(self):
+        if not self._valor:
+            return 0 
+        soma_dos_precos = sum(valor._preco for valor in self._valor)
+        quantidade_fornecedores = len(self._valor)
+        media = round(soma_dos_precos / quantidade_fornecedores, 2)
+        return media
